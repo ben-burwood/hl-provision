@@ -1,0 +1,6 @@
+---
+raspi_features_vnc: true
+raspi_features_spi: false
+raspi_features_i2c: false
+raspi_features_onewire: false
+raspi_features_rgpio: false

@@ -1,0 +1,24 @@
+- name: Get Status for {{ feature_name }}
+  ansible.builtin.command: "raspi-config nonint get_{{ feature_name }}"
+  register: raspi_features_feature_status
+  changed_when: false
+
+- name: Print Status for {{ feature_name }}
+  ansible.builtin.debug:
+    msg: "{{ feature_name | upper }} status is: {{ raspi_features_feature_status.stdout }}"
+
+- name: Enable {{ feature_name | upper }}
+  ansible.builtin.command: "raspi-config nonint do_{{ feature_name }} 0"
+  when:
+    - feature_enabled | default(false)
+    - feature_status is defined
+    - feature_status.stdout != '0'
+  changed_when: true
+
+- name: Disable {{ feature_name | upper }}
+  ansible.builtin.command: "raspi-config nonint do_{{ feature_name }} 1"
+  when:
+    - not (feature_enabled | default(false))
+    - feature_status is defined
+    - feature_status.stdout != '1'
+  changed_when: true

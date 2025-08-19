@@ -1,0 +1,20 @@
+---
+- name: Get and set Raspberry Pi Hostname
+  hosts: all
+  become: true
+  vars:
+    hostname: "raspberrypi"
+  tasks:
+    - name: Get hostname
+      ansible.builtin.command: "raspi-config nonint get_hostname"
+      register: pi_hostname
+      changed_when: false
+
+    - name: Print current hostname
+      ansible.builtin.debug:
+        msg: "Current hostname: {{ pi_hostname.stdout }}"
+
+    - name: Change hostname
+      ansible.builtin.command: "raspi-config nonint do_hostname {{ hostname }}"
+      when: pi_hostname.stdout != hostname
+      changed_when: true

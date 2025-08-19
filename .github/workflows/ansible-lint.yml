@@ -1,0 +1,24 @@
+name: Lint Ansible
+
+on:
+  push:
+    paths:
+      - 'ansible/**'
+  pull_request:
+    paths:
+      - 'ansible/**'
+
+jobs:
+  ansible-lint:
+    uses: ansible/ansible-content-actions/.github/workflows/ansible_lint.yaml@main
+
+  changelog:
+    uses: ansible/ansible-content-actions/.github/workflows/changelog.yaml@main
+    if: github.event_name == 'pull_request'
+
+  sanity:
+    uses: ansible/ansible-content-actions/.github/workflows/sanity.yaml@main
+  unit-galaxy:
+    uses: ansible/ansible-content-actions/.github/workflows/unit.yaml@main
+  integration:
+    uses: ansible/ansible-content-actions/.github/workflows/integration.yaml@main

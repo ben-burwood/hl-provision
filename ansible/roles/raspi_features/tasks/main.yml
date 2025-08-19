@@ -1,0 +1,13 @@
+- name: Configure raspi-config features
+  ansible.builtin.include_tasks: feature.yml
+  loop:
+    - { feature_name: "vnc", feature_enabled: "{{ raspi_features_vnc }}" }
+    - { feature_name: "spi", feature_enabled: "{{ raspi_features_spi }}" }
+    - { feature_name: "i2c", feature_enabled: "{{ raspi_features_i2c }}" }
+    - { feature_name: "onewire", feature_enabled: "{{ raspi_features_onewire }}" }
+    - { feature_name: "rgpio", feature_enabled: "{{ raspi_features_rgpio }}" }
+  loop_control:
+    loop_var: feature
+  vars:
+    feature_name: "{{ feature.feature_name }}"
+    feature_enabled: "{{ feature.feature_enabled }}"

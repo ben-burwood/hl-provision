@@ -1,0 +1,58 @@
+---
+- name: Provision Raspberry Pi
+  hosts: all
+  become: true
+  roles:
+    - raspi_features
+    - geerlingguy.docker
+  tasks:
+    - name: Update raspi-config itself
+      become: true
+      ansible.builtin.apt:
+        name: raspi-config
+        update_cache: true
+        state: present
+        cache_valid_time: 3600
+      when: UPDATE | default(false)
+
+- name: Create Personal User
+  import_playbook: playbooks/user.yml
+  vars:
+    user: "USER"
+    new_password: "PASSWORD"
+
+- name: Create Runner User
+  import_playbook: playbooks/user.yml
+  vars:
+    user: "USER"
+    new_password: "PASSWORD"
+    groups: docker
+
+- name: Install/Configure Packages
+  import_playbook: playbooks/packages.yml
+
+- name: Configure Git
+  import_playbook: playbooks/git-config.yml
+  vars:
+    git_email: "GIT_EMAIL"
+    git_name: "GIT_USER"
+
+- name: Configure GitHub Actions Runner
+  hosts: all
+  become: true
+  roles:
+    - MonolithProjects.github_actions_runner
+  vars:
+    # - runner_user: "RUNNER_USER"
+    # - runner_dir: "home/RUNNER_USER"
+    - github_account: "GIT_USER"
+    - github_repo: "GITHUB_REPO"
+    - access_token: "GITHUB_PAT"
+
+- name: Configure Tailscale
+  hosts: all
+  become: true
+  roles:
+    - artis3n.tailscale.machine
+  vars:
+    tailscale_authkey: "TAILSCALE_AUTH_KEY"
