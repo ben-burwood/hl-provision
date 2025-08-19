@@ -9,7 +9,7 @@
         shell: /bin/bash
         createhome: true
         state: present
-        groups: "{{ groups | default([]) }}"
+        groups: "{{ user_groups | default([]) }}"
         append: true
 
     - name: Change user password

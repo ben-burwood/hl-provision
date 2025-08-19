@@ -4,7 +4,7 @@ all:
     # vars:
     #    ansible_connection: local
     #    ansible_python_interpreter: "{{ansible_playbook_python}}"
-    HOSTNAME:
-      ansible_host: <ip_address>
-      ansible_user: <user>
-      ansible_password: <password>
+    <HOSTNAME>:
+      ansible_host: <IP_ADDRESS}>
+      ansible_user: <USER>
+      ansible_password: <PASSWORD>
