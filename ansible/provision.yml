@@ -29,14 +29,22 @@
 - name: Install/Configure Packages
   import_playbook: playbooks/packages.yml
 
-- name: Configure GitHub Actions Runner
-  hosts: all
-  become: true
-  roles:
-    - MonolithProjects.github_actions_runner
-  vars:
-    - runner_user: <USER>
-    - runner_dir: home/<USER>
-    - github_account: <GITHUB_USER>
-    - github_repo: <GITHUB_REPO>
-    - access_token: <GITHUB_TOKEN>
+# - name: Configure GitHub Actions Runner
+#   hosts: all
+#   become: true
+#   roles:
+#     - MonolithProjects.github_actions_runner
+#   vars:
+#     - runner_user: <USER>
+#     - runner_dir: home/<USER>
+#     - github_account: <GITHUB_USER>
+#     - github_repo: <GITHUB_REPO>
+#     - access_token: <GITHUB_TOKEN>
+
+# - name: Configure Tailscale
+#   hosts: all
+#   become: true
+#   roles:
+#     - artis3n.tailscale.machine
+#   vars:
+#     tailscale_authkey: "TAILSCALE_AUTH_KEY"
