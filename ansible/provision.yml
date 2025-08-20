@@ -22,9 +22,9 @@
 - name: Create Runner User
   import_playbook: playbooks/user.yml
   vars:
-    - user: <USER>
-    - new_password: <PASSWORD>
-    - user_groups: ["docker"]
+    user: <USER>
+    new_password: <PASSWORD>
+    user_groups: ["docker"]
 
 - name: Install/Configure Packages
   import_playbook: playbooks/packages.yml
